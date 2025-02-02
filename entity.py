@@ -1,4 +1,4 @@
-from database import Database
+from DataBase import Database
 import logging
 
 class Teacher:

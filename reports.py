@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from database import Database
+from DataBase import Database
 
 class Reports:
     @staticmethod
@@ -32,3 +32,17 @@ class Reports:
         """Visualize student performance across courses"""
         pass
 
+    @staticmethod
+    def analyze_teacher_workload(db):
+        """Analyze teacher workload"""
+        query = "SELECT teacher_id, COUNT(course_id) FROM courses GROUP BY teacher_id"
+        data = db.fetch_results(query)
+        df = pd.DataFrame(data, columns=['Teacher ID', 'Courses Taught'])
+        if not df.empty:
+            df.plot(x='Teacher ID', y='Courses Taught', kind='bar')
+            plt.title("Teacher Workload Analysis")
+            plt.xlabel("Teacher ID")
+            plt.ylabel("Number of Courses")
+            plt.show()
+        else:
+            print("No data available for teacher workload analysis.")
