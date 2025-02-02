@@ -44,7 +44,7 @@ class Teacher:
 
 
 class Student:
-    def init(self, name, email, class_id):
+    def __init__(self, name, email, class_id):
         self.name = name
         self.email = email
         self.class_id = class_id
@@ -90,7 +90,7 @@ class Student:
             print("No students found.")
 
 class Course:
-    def init(self, title, teacher_id):
+    def __init__(self, title, teacher_id):
         self.title = title
         self.teacher_id = teacher_id
     
