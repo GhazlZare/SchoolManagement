@@ -93,13 +93,16 @@ class Student:
             print("No students found.")
 
 class Course:
-    def __init__(self, title, teacher_id):
+    def init(self, title, teacher_id):
         self.title = title
         self.teacher_id = teacher_id
     
     def add_course(self, db):
         """Add course to database"""
-        pass
+        query = "INSERT INTO courses (title, teacher_id) VALUES (%s, %s)"
+        db.execute_query(query, (self.title, self.teacher_id))
+        print(f"Course '{self.title}' added successfully!")
+        logging.info(f"Course {self.title} added")
 
     
     @staticmethod
