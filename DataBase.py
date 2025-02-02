@@ -7,7 +7,7 @@ logging.basicConfig(filename='school_system.log', level=logging.INFO, format='%(
 class Database:
     def __init__(self):
         """Establish database connection"""
-        self.conn = mysql.connector.connect(host='localhost', user='root', password='Gh14_az03_zl25', database='school_db')
+        self.conn = mysql.connector.connect(host='localhost', user='root', password='pass', database='school_db')
         self.cursor = self.conn.cursor()
         logging.info("Database connection established")
     
