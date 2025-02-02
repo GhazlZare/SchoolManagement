@@ -73,6 +73,14 @@ class Student:
         print(f"Student with the id: {student_id} removed successfully!")
         logging.info(f"Student ID {student_id} removed")
 
+    @staticmethod
+    def update_student(db, student_id, new_name=None, new_email=None, new_class_id=None):
+        """Edit student details"""
+        query = "UPDATE students SET name = %s, email = %s, class_id = %s WHERE student_id = %s"
+        db.execute_query(query, (new_name, new_email, new_class_id, student_id))
+        print(f"Student with the id: {student_id} updated successfully!")
+        logging.info(f"Student ID {student_id} updated")
+
 class Course:
     def __init__(self, title, teacher_id):
         self.title = title
