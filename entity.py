@@ -50,7 +50,21 @@ class Student:
         self.email = email
         self.class_id = class_id
 
-   
+    def add_student(self, db):
+        """Add student to database with class_id validation"""
+        # Check if the class_id exists in the classes table
+        query = "SELECT * FROM classes WHERE class_id = %s"
+        result = db.fetch_results(query, (self.class_id,))
+        
+        if result:
+            # Class exists, proceed to add student
+            query = "INSERT INTO students (name, email, class_id) VALUES (%s, %s, %s)"
+            db.execute_query(query, (self.name, self.email, self.class_id))
+            logging.info(f"Student {self.name} added successfully to class {self.class_id}")
+            print(f"Student {self.name} added successfully.")
+        else:
+            logging.error(f"Class ID {self.class_id} does not exist. Student {self.name} not added.")
+            print(f"Error: Class ID {self.class_id} does not exist. Student {self.name} not added.")
 
 
 class Course:
