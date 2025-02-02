@@ -22,10 +22,6 @@ class Reports:
         else:
             print("No data available for enrollment trends.")
 
-    @staticmethod
-    def analyze_teacher_workload(db):
-        """Analyze teacher workload"""
-        pass
     
     @staticmethod
     def summarize_student_performance(db, student_id):
