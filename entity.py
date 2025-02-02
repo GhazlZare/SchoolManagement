@@ -65,7 +65,13 @@ class Student:
         else:
             logging.error(f"Class ID {self.class_id} does not exist. Student {self.name} not added.")
             print(f"Error: Class ID {self.class_id} does not exist. Student {self.name} not added.")
-
+    @staticmethod
+    def remove_student(db, student_id):
+        """Remove student from database"""
+        query = "DELETE FROM students WHERE student_id = %s"
+        db.execute_query(query, (student_id,))
+        print(f"Student with the id: {student_id} removed successfully!")
+        logging.info(f"Student ID {student_id} removed")
 
 class Course:
     def __init__(self, title, teacher_id):
