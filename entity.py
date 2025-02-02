@@ -151,7 +151,20 @@ class Enrollment:
     
     def enroll_student(self, db):
         """Enroll student in course"""
-        pass
+        query = "SELECT * FROM students WHERE student_id = %s"
+        result = db.fetch_results(query, (self.student_id,))
+        
+        if result: 
+            if self.grade == '':
+                self.grade = None
+
+            query = "INSERT INTO enrollments (student_id, course_id, grade) VALUES (%s, %s, %s)"
+            db.execute_query(query, (self.student_id, self.course_id, self.grade))
+            print(f"Student {self.student_id} enrolled in Course {self.course_id} successfully!")
+            logging.info(f"Student {self.student_id} enrolled in Course {self.course_id}")
+        else:
+            print(f"Error: Student ID {self.student_id} does not exist. Enrollment failed.")
+            logging.error(f"Enrollment failed: Student ID {self.student_id} does not exist.")
 
     @staticmethod
     def update_grade(db, enrollment_id, grade):
