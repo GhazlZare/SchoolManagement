@@ -9,12 +9,18 @@ class Teacher:
     
     def add_teacher(self, db):
         """Add teacher to database"""
-        pass
+        query = "INSERT INTO teachers (name, department) VALUES (%s, %s)"
+        db.execute_query(query, (self.name, self.department))
+        print(f"Teacher '{self.name}' added successfully to the {self.department} department.")
+        logging.info(f"Teacher {self.name} added")
     
     @staticmethod
     def remove_teacher(db, teacher_id):
         """Remove teacher from database"""
-        pass
+        query = "DELETE FROM teachers WHERE teacher_id = %s"
+        db.execute_query(query, (teacher_id,))
+        print(f"Teacher with the id: {teacher_id} removed successfully!")
+        logging.info(f"Teacher ID {teacher_id} removed")
     
     @staticmethod
     def update_teacher(db, teacher_id, new_name=None, new_department=None):
