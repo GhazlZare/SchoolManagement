@@ -30,7 +30,26 @@ class Reports:
     @staticmethod
     def summarize_student_performance(db, student_id):
         """Visualize student performance across courses"""
-        pass
+        query = "SELECT course_id, grade FROM enrollments WHERE student_id = %s"
+        data = db.fetch_results(query, (student_id,))
+        
+        if not data:  
+            print(f"No performance data found for student ID {student_id}.")
+            return
+
+        df = pd.DataFrame(data, columns=['Course ID', 'Grade'])
+        df['Grade'] = pd.to_numeric(df['Grade'], errors='coerce')
+        df.dropna(subset=['Grade'], inplace=True)
+
+        if df.empty:
+            print(f"No valid numeric grade data for student ID {student_id}.")
+            return
+
+        df.plot(x='Course ID', y='Grade', kind='line', marker='o')
+        plt.title(f"Student {student_id} Performance")
+        plt.xlabel("Course ID")
+        plt.ylabel("Grade")
+        plt.show()
 
     @staticmethod
     def analyze_teacher_workload(db):
