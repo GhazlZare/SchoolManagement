@@ -108,7 +108,15 @@ class Course:
     @staticmethod
     def view_courses(db):
         """Fetch all courses"""
-        pass
+        query = "SELECT * FROM courses"
+        courses = db.fetch_results(query)
+        if courses:
+            logging.info("Courses fetched successfully")
+            return courses
+        else:
+            logging.info("No courses found")
+            print("No courses found.")
+            return []
 
 class Class:
     def __init__(self, class_name):
