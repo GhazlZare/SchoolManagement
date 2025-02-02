@@ -25,12 +25,23 @@ class Teacher:
     @staticmethod
     def update_teacher(db, teacher_id, new_name=None, new_department=None):
         """Edit teacher details"""
-        pass
+        query = "UPDATE teachers SET name = %s, department = %s WHERE teacher_id = %s"
+        db.execute_query(query, (new_name, new_department, teacher_id))
+        print(f"Teacher with the id: {teacher_id} updated successfully!")
+        logging.info(f"Teacher ID {teacher_id} updated")
     
     @staticmethod
     def view_teachers(db):
         """Fetch all teachers"""
-        pass
+        query = "SELECT * FROM teachers"
+        teachers = db.fetch_results(query)
+        if teachers:
+            logging.info("Teachers fetched successfully")
+            return teachers
+        else:
+            logging.info("No teachers found")
+            print("No teachers found.")
+            return []
 
 class Student:
     def __init__(self, name, email, class_id):
