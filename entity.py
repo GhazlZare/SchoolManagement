@@ -169,7 +169,13 @@ class Enrollment:
     @staticmethod
     def update_grade(db, enrollment_id, grade):
         """Update grade for a student in a course"""
-        pass
+        if grade == '':
+            grade = None
+        
+        query = "UPDATE enrollments SET grade = %s WHERE enrollment_id = %s"
+        db.execute_query(query, (grade, enrollment_id))
+        print(f"Grade for Enrollment ID {enrollment_id} updated to {grade} successfully!")
+        logging.info(f"Updated grade for Enrollment ID {enrollment_id}")
     
     @staticmethod
     def view_enrollments(db):
