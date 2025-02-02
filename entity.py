@@ -90,13 +90,24 @@ class Class:
     
     def add_class(self, db):
         """Add class to database"""
-        pass
+        query = "INSERT INTO classes (class_name) VALUES (%s)"
+        db.execute_query(query, (self.class_name,))
+        print(f"Class '{self.class_name}' added successfully!")
+        logging.info(f"Class {self.class_name} added")
 
     
     @staticmethod
     def view_classes(db):
         """Fetch all classes"""
-        pass
+        query = "SELECT * FROM classes"
+        classes = db.fetch_results(query)
+        if classes:
+            logging.info("Classes fetched successfully")
+            return classes
+        else:
+            logging.info("No classes found")
+            print("No classes found.")
+            return []
 
 class Enrollment:
     def __init__(self, student_id, course_id, grade=None):
