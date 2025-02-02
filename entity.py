@@ -1,4 +1,3 @@
-# models.py
 from DataBase import Database
 import logging
 
@@ -52,12 +51,10 @@ class Student:
 
     def add_student(self, db):
         """Add student to database with class_id validation"""
-        # Check if the class_id exists in the classes table
         query = "SELECT * FROM classes WHERE class_id = %s"
         result = db.fetch_results(query, (self.class_id,))
         
         if result:
-            # Class exists, proceed to add student
             query = "INSERT INTO students (name, email, class_id) VALUES (%s, %s, %s)"
             db.execute_query(query, (self.name, self.email, self.class_id))
             logging.info(f"Student {self.name} added successfully to class {self.class_id}")
@@ -180,4 +177,25 @@ class Enrollment:
     @staticmethod
     def view_enrollments(db):
         """Fetch all enrollments with student, course details, and grade"""
-        pass
+        query = """
+            SELECT e.enrollment_id, s.name AS student_name, c.title AS course_title, e.course_id, e.grade
+            FROM enrollments e
+            JOIN students s ON e.student_id = s.student_id
+            JOIN courses c ON e.course_id = c.course_id
+        """
+        enrollments = db.fetch_results(query)
+
+        print(f"DEBUG: enrollments = {enrollments}")  
+
+        if not enrollments:  
+            print("No enrollments found.")
+            return []  
+
+        print("\nEnrollments:")
+        print(f"{'Enrollment ID':<15}{'Student Name':<20}{'Course Title':<25}{'Course ID':<10}{'Grade':<10}")
+        print("-" * 80)
+
+        for enrollment in enrollments:
+            print(f"{enrollment[0]:<15}{enrollment[1]:<20}{enrollment[2]:<25}{enrollment[3]:<10}{enrollment[4]:<10}")
+
+        return enrollments
