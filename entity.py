@@ -81,6 +81,17 @@ class Student:
         print(f"Student with the id: {student_id} updated successfully!")
         logging.info(f"Student ID {student_id} updated")
 
+    @staticmethod
+    def view_students(db):
+        """Fetch all students"""
+        query = "SELECT * FROM students"
+        students = db.fetch_results(query)
+        if students:
+            for student in students:
+                print(student)
+        else:
+            print("No students found.")
+
 class Course:
     def __init__(self, title, teacher_id):
         self.title = title
